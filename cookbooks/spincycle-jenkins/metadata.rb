@@ -1,0 +1,11 @@
+name 'spincycle-jenkins'
+maintainer 'Chef, Inc'
+maintainer_email 'thom@chef.io'
+license 'apache2'
+description 'Installs/Configures spincycle-jenkins'
+long_description 'Installs/Configures spincycle-jenkins'
+version '0.1.0'
+
+depends 'apt'
+depends 'jenkins'
+depends 'java'

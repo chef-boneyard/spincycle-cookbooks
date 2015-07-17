@@ -1,0 +1,14 @@
+{
+  "id": "windows",
+  "repo": "opscode-cookbooks/windows",
+  "platforms": [
+    {
+      "name":"windows-2012r2",
+			"driver": {"image_id": "ami-c5688281", "instance_type": "m3.medium"}
+    },
+    {
+      "name": "windows-2008r2",
+			"driver": {"image_id": "ami-0d6d8749", "instance_type": "m3.medium"}
+    }
+  ]
+}
