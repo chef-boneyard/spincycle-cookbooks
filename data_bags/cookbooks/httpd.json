@@ -1,0 +1,31 @@
+{
+	"id": "httpd",
+	"repo": "chef-cookbooks/httpd",
+	"platforms": [
+		{
+			"name": "amazon-2014.09",
+			"driver": {"image_id": "ami-9a6ed3f2"}
+		},
+		{ 
+			"name": "centos-6",
+			"driver": {"image_id": "ami-57cfc412"}
+		},
+		{ 
+			"name": "centos-7",
+			"driver": {"image_id": "ami-6bcfc42e"}
+		},
+		{
+			"name": "debian-8.0",
+			"driver": {"image_id": "ami-05cf2541"}
+		},
+		{
+			"name":"ubuntu-12.04",
+			"run_list": "apt::default"
+		},
+		{
+			"name": "ubuntu-14.04",
+			"run_list": "apt::default",
+			"driver": {"image_id": "ami-2d37c669"}
+		}
+	]
+}

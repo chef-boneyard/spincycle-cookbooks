@@ -89,18 +89,18 @@ default_kitchen_config = {
     "name"=>"ec2",
     "security_group_ids"=>["sg-6c37a109"],
     "region"=>"us-west-1",
-    "aws_ssh_key_id"=>"spincycle_jenkins"
+    "aws_ssh_key_id"=>"spincycle_jenkins",
+    "retryable_tries"=>120,
+    "instance_type"=>"m3.medium"
   },
   "provisioner"=>{"chef_omnibus_install_options"=>"-p -n"},
-  "transport"=>{"ssh_key"=>"/var/lib/jenkins/.ssh/spincycle_jenkins"}
+  "transport"=>{"max_wait_until_ready" => 1200, "ssh_key"=>"/var/lib/jenkins/.ssh/spincycle_jenkins"}
 }
 
 data_bag("cookbooks").each do |cb|
   data = data_bag_item("cookbooks", cb)
   cfg = default_kitchen_config.dup
   cfg["platforms"] = data["platforms"]
-
-  log "data for #{cb} is #{cfg.inspect}"
 
   cb_test cb do
     repo data["repo"]
