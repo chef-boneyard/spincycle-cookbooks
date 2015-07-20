@@ -14,9 +14,16 @@
 			"name": "centos-7",
 			"driver": {"image_id": "ami-6bcfc42e"}
 		},
+// Disable debian 8 for now
+//		{
+//			"name": "debian-8.0",
+//			"run_list": "apt::default",
+//			"driver": {"image_id": "ami-05cf2541", "username": "admin"}
+//		},
 		{
-			"name": "debian-8.0",
-			"driver": {"image_id": "ami-05cf2541"}
+			"name": "debian-7.8",
+			"run_list": "apt::default",
+			"driver": {"image_id": "ami-b4869ff1", "username": "admin"}
 		},
 		{
 			"name":"ubuntu-12.04",
