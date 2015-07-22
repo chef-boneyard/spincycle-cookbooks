@@ -93,12 +93,13 @@ default_kitchen_config = {
     "retryable_tries"=>120,
     "instance_type"=>"m3.medium"
   },
-  "provisioner"=>{"chef_omnibus_install_options"=>"-p -n"},
+  "provisioner"=>{"chef_omnibus_install_options"=>"-p -n", "require_chef_omnibus"=>"latest"},
   "transport"=>{"max_wait_until_ready" => 1200, "ssh_key"=>"/var/lib/jenkins/.ssh/spincycle_jenkins"}
 }
 
 data_bag("cookbooks").each do |cb|
   data = data_bag_item("cookbooks", cb)
+  next if data.key?("disabled")
   cfg = default_kitchen_config.dup
   cfg["platforms"] = data["platforms"]
 

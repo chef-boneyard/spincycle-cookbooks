@@ -1,11 +1,7 @@
 {
-	"id": "httpd",
-	"repo": "chef-cookbooks/httpd",
+	"id": "chef-sugar",
+	"repo": "sethvargo/chef-sugar",
 	"platforms": [
-		{
-			"name": "amazon-2014.09",
-			"driver": {"image_id": "ami-9a6ed3f2"}
-		},
 		{ 
 			"name": "centos-6.6",
 			"driver": {"image_id": "ami-57cfc412"}
@@ -21,12 +17,11 @@
 //			"driver": {"image_id": "ami-bd52bbf9"},
 //		 	"transport": {"username": "fedora"}
 //		},
-// Disable debian 8 for now
-//		{
-//			"name": "debian-8.0",
-//			"run_list": "apt::default",
-//			"driver": {"image_id": "ami-05cf2541", "username": "admin"}
-//		},
+		{
+			"name": "debian-8.0",
+			"run_list": "apt::default",
+			"driver": {"image_id": "ami-05cf2541", "username": "admin"}
+		},
 		{
 			"name": "debian-7.8",
 			"run_list": "apt::default",

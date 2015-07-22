@@ -1,0 +1,31 @@
+{
+	"id": "yum",
+	"repo": "chef-cookbooks/yum",
+	"platforms": [
+		{
+			"name": "amazon-2015.03",
+			"driver": {"image_id": "ami-d114f295"},
+			"transport": {"username": "ec2-user"}
+		},
+		{ 
+			"name": "centos-6.6",
+			"driver": {"image_id": "ami-57cfc412"}
+		},
+		{ 
+			"name": "centos-7.1",
+			"driver": {"image_id": "ami-6bcfc42e"},
+			"transport": {"username": "centos"}
+		},
+		{
+			"name": "fedora-21",
+			"driver": {"image_id": "ami-dce3fb99"},
+		 	"transport": {"username": "fedora"}
+		}
+// FC 22 is busted due to DNF/yum
+//		{
+//			"name": "fedora-22",
+//			"driver": {"image_id": "ami-bd52bbf9"},
+//		 	"transport": {"username": "fedora"}
+//		},
+	]
+}
