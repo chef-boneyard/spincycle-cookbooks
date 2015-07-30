@@ -1,6 +1,6 @@
 {
-	"id": "httpd",
-	"repo": "chef-cookbooks/httpd",
+	"id": "mysql",
+	"repo": "chef-cookbooks/mysql",
 	"platforms": [
 		{
 			"name": "amazon-2015.03",
