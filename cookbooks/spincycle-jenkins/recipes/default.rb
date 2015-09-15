@@ -87,14 +87,14 @@ end
 default_kitchen_config = {
   "driver"=>{
     "name"=>"ec2",
-    "security_group_ids"=>["sg-6c37a109"],
-    "region"=>"us-west-1",
-    "aws_ssh_key_id"=>"spincycle_jenkins",
+    "security_group_ids"=>["spincycle"],
+    "region"=>"us-west-2",
+    "aws_ssh_key_id"=>node['ssh_key'],
     "retryable_tries"=>120,
     "instance_type"=>"m3.medium"
   },
   "provisioner"=>{"chef_omnibus_install_options"=>"-p -n", "require_chef_omnibus"=>"latest"},
-  "transport"=>{"max_wait_until_ready" => 1200, "ssh_key"=>"/var/lib/jenkins/.ssh/spincycle_jenkins"}
+  "transport"=>{"max_wait_until_ready" => 1200, "ssh_key"=>"/var/lib/jenkins/.ssh/#{node['ssh_key']}"}
 }
 
 data_bag("cookbooks").each do |cb|
