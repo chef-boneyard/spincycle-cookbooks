@@ -6,7 +6,7 @@
 		{ 
 			"name": "centos-6.6",
 			"run_list": "recipe[audit-cis::centos6-110]",
-			"driver": {"image_id": "ami-57cfc412"}
+			"driver": {"image_id": "ami-81d092b1"}
 		},
 		{ 
 			"name": "centos-7",
@@ -17,7 +17,7 @@
     {
       "name": "ubuntu-14.04",
       "run_list": "recipe[audit-cis::ubuntu1404-100]",
-      "driver": {"image_id": "ami-2d37c669"}
+      "driver": {"image_id": "ami-5189a661"}
     }
   ]
 }
