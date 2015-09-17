@@ -10,7 +10,7 @@
 		},
 		{ 
 			"name": "centos-7",
-			"driver": {"image_id": "ami-6bcfc42e"},
+			"driver": {"image_id": "ami-c7d092f7"},
 			"run_list": "recipe[audit-cis::centos7-100]",
 			"transport": {"username": "centos"}
 		},
