@@ -1,0 +1,15 @@
+{
+  "id": "github-oauth",
+  "client-id": {
+    "encrypted_data": "y2bmhW5qYdqcT3geffAoTWLu0EJU4mZKfzsyogiqGuxFkJrKU6xGr/jSCrdG\n43Rb\n",
+    "iv": "mzVrKwAmmxhj6uhbVlmxQA==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "client-secret": {
+    "encrypted_data": "uKfAmcqy/qI1t48fmG90QwzldihJWYQ/v9LY/hiaN+K/7xTjhiW0Rko+JoMz\ndJtIWVlYzHy1xRCFVH0B866M+A==\n",
+    "iv": "E+fLY9t2LErexq4k+pg1Iw==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  }
+}

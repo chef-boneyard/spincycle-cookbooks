@@ -42,6 +42,13 @@ end
   end
 end
 
+machine_file "/etc/chef/encrypted_data_bag_secret" do
+  local_path ".chef/encrypted_data_bag_secret"
+  mode "0600"
+  owner "root"
+  machine context.node_name
+end
+
 machine context.node_name do
   attributes ssh_key: node['ssh_key']
   converge true

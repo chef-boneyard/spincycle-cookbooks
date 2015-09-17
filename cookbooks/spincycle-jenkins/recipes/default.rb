@@ -16,6 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+include_recipe 'chef-sugar::default'
+
 node.default['java']['jdk_version'] = 7
 node.default['java']['install_flavor'] = 'oracle'
 node.default['java']['oracle']['accept_oracle_download_terms'] = true
@@ -62,6 +64,51 @@ plugins.each_with_index do |(name, pv), index|
       notifies :restart, 'service[jenkins]', :immediately 
     end
   end
+end
+
+################################################################################
+# Configure Authentication
+################################################################################
+jenkins_users = encrypted_data_bag_item_for_environment('jenkins', 'users')
+
+key = OpenSSL::PKey::RSA.new(jenkins_users['chef-jenkins']['private_key'])
+private_key = key.to_pem
+public_key  = "#{key.ssh_type} #{[key.to_blob].pack('m0')}"
+
+node.run_state[:jenkins_private_key] = private_key # ~FC001
+
+# Create a Jenkins user for Chef to authenitcate with for confiugration
+# activities
+jenkins_user 'chef-jenkins' do
+  full_name 'Chef Jenkins User'
+  public_keys [public_key]
+end
+
+# Enable GitHub OAuth as the authenitcation backend
+github_oauth_creds = encrypted_data_bag_item_for_environment('jenkins', 'github-oauth')
+
+jenkins_script 'enable-github-auth' do
+  command <<-GROOVY
+    import jenkins.model.*
+    import hudson.security.*
+    import org.jenkinsci.plugins.*
+
+    jenkins = jenkins.model.Jenkins.getInstance()
+
+    githubRealm = new GithubSecurityRealm(
+      'https://github.com',
+      'https://api.github.com',
+      '#{github_oauth_creds['client-id']}',
+      '#{github_oauth_creds['client-secret']}'
+    )
+    jenkins.setSecurityRealm(githubRealm)
+
+    strategy = new FullControlOnceLoggedInAuthorizationStrategy()
+
+    jenkins.setAuthorizationStrategy(strategy)
+
+    jenkins.save()
+  GROOVY
 end
 
 # %w(kitchen-ec2 kitchen-pester winrm-transport).each do |pkg|
