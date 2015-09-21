@@ -4,28 +4,28 @@
 	"platforms": [
 		{
 			"name": "amazon-2015.03",
-			"driver": {"image_id": "ami-d5c5d1e5"},
+			"driver": {"image_id": "ami-d114f295"},
 			"transport": {"username": "ec2-user"}
 		},
 		{ 
 			"name": "centos-6.6",
-			"driver": {"image_id": "ami-81d092b1"}
+			"driver": {"image_id": "ami-57cfc412"}
 		},
 		{ 
 			"name": "centos-7.1",
-			"driver": {"image_id": "ami-c7d092f7"},
+			"driver": {"image_id": "ami-6bcfc42e"},
 			"transport": {"username": "centos"}
 		},
     {
       "name": "debian-8.0",
       "run_list": "apt::default",
-      "driver": {"image_id": "ami-818eb7b1"},
+      "driver": {"image_id": "ami-05cf2541"},
       "transport": {"username": "admin"}
     },
 		{
 			"name": "debian-7.8",
 			"run_list": "apt::default",
-      "driver": {"image_id": "ami-431a4273"},
+      "driver": {"image_id": "ami-b4869ff1"},
 			"transport": {"username": "admin"}
 		},
 		{
@@ -35,7 +35,7 @@
 		{
 			"name": "ubuntu-14.04",
 			"run_list": "apt::default",
-			"driver": {"image_id": "ami-5189a661"}
+			"driver": {"image_id": "ami-2d37c669"}
 		}
 	]
 }

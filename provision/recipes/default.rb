@@ -1,7 +1,7 @@
 require 'chef/provisioning/aws_driver'
 context = ChefDK::ProvisioningData.context
 
-with_driver 'aws:default:us-west-2'
+with_driver 'aws:default:us-west-1'
 
 with_chef_server node['bootstrap_url'],
   client_name: node['bootstrap_client'],
@@ -19,12 +19,13 @@ end
 machine context.node_name do
   machine_options bootstrap_options: {iam_instance_profile: { name: 'spincycle_provisioner'},
                                       key_name: node['ssh_key'],
-                                      image_id: 'ami-5189a661',
+                                      image_id: 'ami-b33dccf7',
                                       instance_type: 'm3.medium',
                                       security_group_ids: ["spincycle"]
   },
     transport_options: {ssh_options: { use_agent: true}},
     convergence_options: context.convergence_options
+  aws_tags "X-Project" => "Chef client"
   action :setup
 end
 
@@ -52,5 +53,6 @@ end
 machine context.node_name do
   attributes ssh_key: node['ssh_key']
   converge true
+  machine_options convergence_options: context.convergence_options
   action context.action
 end

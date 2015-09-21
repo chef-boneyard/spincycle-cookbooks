@@ -4,11 +4,11 @@
   "platforms": [
     {
       "name":"windows-2012r2",
-			"driver": {"image_id": "ami-8d8e93bd", "instance_type": "m3.medium"}
-    },
-    {
-      "name":"windows-208r2",
-			"driver": {"image_id": "ami-ad879a9d", "instance_type": "m3.medium"}
+      "driver": {"image_id": "ami-c5688281", "instance_type": "m3.medium"}
     }
+    // {
+    //   "name":"windows-208r2",
+    // "driver": {"image_id": "ami-ad879a9d", "instance_type": "m3.medium"}
+    // }
   ]
 }

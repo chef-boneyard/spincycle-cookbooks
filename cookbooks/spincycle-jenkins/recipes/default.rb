@@ -16,43 +16,43 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe 'chef-sugar::default'
+include_recipe "chef-sugar::default"
 
-node.default['java']['jdk_version'] = 7
-node.default['java']['install_flavor'] = 'oracle'
-node.default['java']['oracle']['accept_oracle_download_terms'] = true
+node.default["java"]["jdk_version"] = 7
+node.default["java"]["install_flavor"] = "oracle"
+node.default["java"]["oracle"]["accept_oracle_download_terms"] = true
 
-include_recipe 'java'
-include_recipe 'apt'
+include_recipe "java"
+include_recipe "apt"
 
-package 'ntp'
-package 'ntpdate'
-package 'apt-transport-https'
-package 'git'
+package "ntp"
+package "ntpdate"
+package "apt-transport-https"
+package "git"
 
-apt_repository 'chef-stable' do
-  uri 'https://packagecloud.io/chef/stable/ubuntu/'
-  key 'https://packagecloud.io/gpg.key'
-  distribution node['lsb']['codename']
+apt_repository "chef-stable" do
+  uri "https://packagecloud.io/chef/stable/ubuntu/"
+  key "https://packagecloud.io/gpg.key"
+  distribution node["lsb"]["codename"]
   deb_src true
   trusted true
   components %w( main )
 end
 
-package 'chefdk'
+package "chefdk"
 
-include_recipe 'jenkins::master'
+include_recipe "jenkins::master"
 
 plugins = {
-  'scm-api'                       => '0.2',
-  'git-client'                    => '1.17.1',
-  'git'                           => '2.3.5',
-  'jquery'                        => '1.11.2-0',
-  'jquery-ui'                     => '1.0.2',
-  'github-api'                    => '1.67',
-  'github-oauth'                  => '0.20',
-  'copy-data-to-workspace-plugin' => '1.0',
-  'postbuildscript'               => '0.17',
+  "scm-api"                       => "0.2",
+  "git-client"                    => "1.17.1",
+  "git"                           => "2.3.5",
+  "jquery"                        => "1.11.2-0",
+  "jquery-ui"                     => "1.0.2",
+  "github-api"                    => "1.67",
+  "github-oauth"                  => "0.20",
+  "copy-data-to-workspace-plugin" => "1.0",
+  "postbuildscript"               => "0.17",
 }
 
 plugins.each_with_index do |(name, pv), index|
@@ -61,7 +61,7 @@ plugins.each_with_index do |(name, pv), index|
     action :install
     install_deps false
     if index == (plugins.size - 1)
-      notifies :restart, 'service[jenkins]', :immediately 
+      notifies :restart, "service[jenkins]", :immediately 
     end
   end
 end
@@ -69,9 +69,9 @@ end
 ################################################################################
 # Configure Authentication
 ################################################################################
-jenkins_users = encrypted_data_bag_item_for_environment('jenkins', 'users')
+jenkins_users = encrypted_data_bag_item_for_environment("jenkins", "users")
 
-key = OpenSSL::PKey::RSA.new(jenkins_users['chef-jenkins']['private_key'])
+key = OpenSSL::PKey::RSA.new(jenkins_users["chef-jenkins"]["private_key"])
 private_key = key.to_pem
 public_key  = "#{key.ssh_type} #{[key.to_blob].pack('m0')}"
 
@@ -79,15 +79,15 @@ node.run_state[:jenkins_private_key] = private_key # ~FC001
 
 # Create a Jenkins user for Chef to authenitcate with for confiugration
 # activities
-jenkins_user 'chef-jenkins' do
-  full_name 'Chef Jenkins User'
+jenkins_user "chef-jenkins" do
+  full_name "Chef Jenkins User"
   public_keys [public_key]
 end
 
 # Enable GitHub OAuth as the authenitcation backend
-github_oauth_creds = encrypted_data_bag_item_for_environment('jenkins', 'github-oauth')
+github_oauth_creds = encrypted_data_bag_item_for_environment("jenkins", "github-oauth")
 
-jenkins_script 'enable-github-auth' do
+jenkins_script "enable-github-auth" do
   command <<-GROOVY
     import jenkins.model.*
     import hudson.security.*
@@ -96,10 +96,10 @@ jenkins_script 'enable-github-auth' do
     jenkins = jenkins.model.Jenkins.getInstance()
 
     githubRealm = new GithubSecurityRealm(
-      'https://github.com',
-      'https://api.github.com',
-      '#{github_oauth_creds['client-id']}',
-      '#{github_oauth_creds['client-secret']}'
+      "https://github.com",
+      "https://api.github.com",
+      "#{github_oauth_creds["client-id"]}",
+      "#{github_oauth_creds["client-secret"]}"
     )
     jenkins.setSecurityRealm(githubRealm)
 
@@ -111,36 +111,37 @@ jenkins_script 'enable-github-auth' do
   GROOVY
 end
 
-# %w(kitchen-ec2 kitchen-pester winrm-transport).each do |pkg|
-#   execute "/opt/chefdk/embedded/bin/gem install #{pkg}" do
-#     user "jenkins"
-#   end
-# end
+%w(kitchen-ec2 kitchen-pester winrm-transport).each do |pkg| 
+  gem_package pkg do
+    gem_binary "/opt/chefdk/embedded/bin/gem"
+    options "--no-user-install"
+  end
+end
 
-directory '/var/lib/jenkins/.ssh' do
-  owner 'jenkins'
-  mode '0700'
+directory "/var/lib/jenkins/.ssh" do
+  owner "jenkins"
+  mode "0700"
 end
 
 file "/var/lib/jenkins/.ssh/#{node['ssh_key']}" do
-  owner 'jenkins'
-  mode '0600'
+  owner "jenkins"
+  mode "0600"
 end
 
-directory '/var/lib/jenkins/config' do
-  owner 'jenkins'
+directory "/var/lib/jenkins/config" do
+  owner "jenkins"
 end
 
 default_kitchen_config = {
   "driver"=>{
     "name"=>"ec2",
     "security_group_ids"=>["spincycle"],
-    "region"=>"us-west-2",
-    "aws_ssh_key_id"=>node['ssh_key'],
+    "region"=>"us-west-1",
+    "aws_ssh_key_id"=>node["ssh_key"],
     "retryable_tries"=>120,
     "instance_type"=>"m3.medium"
   },
-  "provisioner"=>{"chef_omnibus_install_options"=>"-p -n", "require_chef_omnibus"=>"latest"},
+  "provisioner"=>{"chef_omnibus_install_options"=>"-p -n", "require_chef_omnibus"=>"latest", "chef_omnibus_url" => "https://omnitruck.chef.io/current/install.sh"},
   "transport"=>{"max_wait_until_ready" => 1200, "ssh_key"=>"/var/lib/jenkins/.ssh/#{node['ssh_key']}"}
 }
 

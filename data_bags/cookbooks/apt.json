@@ -9,18 +9,18 @@
     {
       "name": "ubuntu-14.04",
       "run_list": "apt::default",
-      "driver": {"image_id": "ami-5189a661"}
+      "driver": {"image_id": "ami-2d37c669"}
     },
     {
       "name": "debian-8.0",
       "run_list": "apt::default",
-      "driver": {"image_id": "ami-818eb7b1"},
+      "driver": {"image_id": "ami-05cf2541"},
       "transport": {"username": "admin"}
     },
     {
       "name": "debian-7.8",
       "run_list": "apt::default",
-      "driver": {"image_id": "ami-431a4273"},
+      "driver": {"image_id": "ami-b4869ff1"},
       "transport": {"username": "admin"}
     }
   ]
