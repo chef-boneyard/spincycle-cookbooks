@@ -2,6 +2,7 @@
 	"id": "chef-sugar",
 	"repo": "sethvargo/chef-sugar",
 	"disabled": "true",
+  // kitchen tests don't work; due to chef-sugar trying to gem require itself in the wrong place
 	"platforms": [
 		{ 
 			"name": "centos-6.6",

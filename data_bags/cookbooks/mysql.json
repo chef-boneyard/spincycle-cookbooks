@@ -2,6 +2,7 @@
   "id": "mysql",
   "repo": "chef-cookbooks/mysql",
 	"disabled": "true",
+  // explodes somewhere deep in the init system
   "platforms": [
     {
       "name": "amazon-2015.03",

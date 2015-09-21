@@ -1,6 +1,8 @@
 {
 	"id": "packagecloud",
 	"repo": "computology/packagecloud-cookbook",
+  // doesn't work unless you have access to the packagecloud test repos
+  // and assumes vagrant
 	"disabled": "true",
 	"platforms": [
 		{
