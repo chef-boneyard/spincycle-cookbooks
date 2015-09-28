@@ -18,7 +18,7 @@
 		},
 		{
 			"name": "fedora-22",
-			"driver": {"image_id": "ami-bbc6fb8b"},
+			"driver": {"image_id": "ami-0313fd47"},
 		 	"transport": {"username": "fedora"}
 		}
 	]
