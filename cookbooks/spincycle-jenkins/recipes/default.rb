@@ -141,7 +141,7 @@ default_kitchen_config = {
     "retryable_tries"=>120,
     "instance_type"=>"m3.medium"
   },
-  "provisioner"=>{"chef_omnibus_install_options"=>"-p -n", "require_chef_omnibus"=>"latest", "chef_omnibus_url" => "https://omnitruck.chef.io/current/install.sh"},
+  "provisioner"=>{"chef_omnibus_install_options"=>"-p -n", "prerelease" => "true", "require_chef_omnibus"=>"latest", "chef_omnibus_url" => "https://omnitruck.chef.io/install.sh"},
   "transport"=>{"max_wait_until_ready" => 1200, "ssh_key"=>"/var/lib/jenkins/.ssh/#{node['ssh_key']}"}
 }
 
